@@ -1,20 +1,95 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# SmartCommerce - E-Commerce Product Management System
 
-# Run and deploy your AI Studio app
+## Overview
+SmartCommerce is a modern E-Commerce Product Management System designed to manage products, inventory, orders, customers, and analytics through an intuitive dashboard and customer-facing shopping interface.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/45bddc17-8ff6-4f98-896c-7e95f0ddd334
+### Customer Features
+- User Authentication
+- Product Browsing
+- Product Search & Filtering
+- Shopping Cart
+- Wishlist
+- Order Tracking
+- Product Reviews & Ratings
+- Profile Management
 
-## Run Locally
+### Admin Features
+- Product Management
+- Category Management
+- Inventory Tracking
+- Order Management
+- Customer Management
+- Sales Analytics
+- Dashboard Reports
 
-**Prerequisites:**  Node.js
+## Technology Stack
 
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Backend
+- Node.js
+- Express.js
+
+### AI Integration
+- Google Gemini API
+
+## Project Structure
+
+```text
+src/
+├── components/
+├── pages/
+├── services/
+├── data/
+├── types/
+└── assets/
+```
+
+## Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/sharanya22-2005/Ecommerce-product-management-system.git
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Create `.env.local`
+
+```env
+GEMINI_API_KEY=your_api_key
+```
+
+4. Run the application
+
+```bash
+npm run dev
+```
+
+## Future Enhancements
+
+- Payment Gateway Integration
+- Real Database Connectivity
+- AI Product Recommendation System
+- Mobile Application
+- Multi-Vendor Support
+- Advanced Analytics
+
+## Author
+
+Sharanya P V
+
+## License
+
+This project is developed for educational and portfolio purposes.
