@@ -1,0 +1,6 @@
+{
+  "name": "SmartCommerce",
+  "description": "E-Commerce Product Management System with client mobile simulator, Express backend with JWT auth, Recharts analytics, and real-time AI assistance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
