@@ -23,13 +23,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'mobile' | 'admin' | 'developer'>('mobile');
   
   // Real active user login state
-  const [currentUser, setCurrentUser] = useState<any>({
-    id: "user-1",
-    name: "Sharanya Viswanathan",
-    email: "pvsharanya21@gmail.com",
-    mobile: "+91 9876543210",
-    role: "Customer"
-  });
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   // Dynamic system notifications events log
   const [systemLogs, setSystemLogs] = useState<Array<{ id: string; title: string; desc: string; time: string }>>([

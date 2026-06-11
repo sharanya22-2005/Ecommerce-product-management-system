@@ -240,6 +240,305 @@ const dbState = {
       rating: 4.6,
       numReviews: 112,
       isTrending: true
+    },
+    {
+      id: "prod-groc-1",
+      name: "Artisan Ethiopian Yirgacheffe Coffee Beans (Single Origin)",
+      description: "Light-medium roast whole organic coffee beans sourced directly from the high-altitude fields of Yirgacheffe, Ethiopia. Delivers exceptional floral notes, bright citrus acidity, and rich jasmine fragrance.",
+      category: "grocery",
+      brand: "Artisan Coffee",
+      sku: "ART-ETH-YIRG-500",
+      price: 28,
+      discountPrice: 22,
+      quantity: 150,
+      images: [
+        "https://images.unsplash.com/photo-1559056191-72147ef31e13?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Origin": "Yirgacheffe, Ethiopia (Single-Origin Specialty Grain)",
+        "Roast Level": "Light-Medium Roast profiles",
+        "Flavor Accents": "Meyer Lemon, Floral Tea, Mandarin Honey",
+        "Package Net Weight": "500g (Vacuum Sealed Foil Valve Protective Pack)"
+      },
+      weight: "500g",
+      dimensions: "220 x 110 x 60 mm",
+      warranty: "Freshly roasted. Best consumed within 12 months.",
+      rating: 4.9,
+      numReviews: 83,
+      isBestseller: true,
+      isNew: true
+    },
+    {
+      id: "prod-groc-2",
+      name: "Gourmet Madagascar Organic Dark Chocolate (85% Cocoa Blend)",
+      description: "Artisanal hand-tempered single-origin Madagascar cocoa bar. Infused with natural Bourbon vanilla, dynamic sea salt crystals, and a velvety smooth cocoa-butter profile.",
+      category: "grocery",
+      brand: "Chocolatier Royale",
+      sku: "CHOC-85-MAD-100",
+      price: 12,
+      discountPrice: 9.5,
+      quantity: 200,
+      images: [
+        "https://images.unsplash.com/photo-1549007994-cb92ca813bec?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1504973960431-1c467e159aa4?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Cocoa Mass percentage": "85% Single-Origin Madagascar Cocoa",
+        "Ingredients": "Madagascar Cocoa Beans, Organic Sugar, Pure Cocoa Butter, Sea Salt, Vanilla",
+        "Diets supported": "Gluten-Free, Certified Organic, Vegan Friendly",
+        "Bar Net Weight": "100g premium golden foil wrapping"
+      },
+      weight: "100g",
+      dimensions: "160 x 80 x 10 mm",
+      warranty: "100% Organic, Fair Trade Sourced ingredient warranty",
+      rating: 4.8,
+      numReviews: 47,
+      isTrending: true
+    },
+    {
+      id: "prod-books-1",
+      name: "Universal Design Systems: Principles and Custom Code",
+      description: "The complete hardcover professional textbook for modern UX Designers and Software Architects. Learn tokenization, cross-framework layouts, component API patterns, fluid typography scaling, and real production Figma conversions.",
+      category: "books",
+      brand: "DesignTech Press",
+      sku: "BK-UDS-2026",
+      price: 55,
+      discountPrice: 45,
+      quantity: 75,
+      images: [
+        "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "ISBN-13": "978-3-16-148410-0",
+        "Cover Type": "Premium Linen Hardbound with Metallic Ribbon Marker",
+        "Pages count": "480 Pages, printed in full-color soy oil inks",
+        "Target Audience": "Senior UI/UX Designers, Frontend engineers, Tech Leads"
+      },
+      weight: "850g",
+      dimensions: "240 x 170 x 32 mm",
+      warranty: "Collectible Author signed edition guarantee",
+      rating: 4.9,
+      numReviews: 142,
+      isBestseller: true
+    },
+    {
+      id: "prod-books-2",
+      name: "Astra Horizon: Science Fiction Short Stories",
+      description: "Deluxe gilded anthology containing fifteen award-winning science fiction short stories exploring cybernetic intelligence, deep space exploration, and planetary Dyson spheres. Written by leading speculative novelists.",
+      category: "books",
+      brand: "Galaxy Press",
+      sku: "BK-AH-GIL",
+      price: 24,
+      discountPrice: 19.99,
+      quantity: 120,
+      images: [
+        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Format": "Hardcover Gilded Page Edges with protective sleeve",
+        "Edition Year": "2026 Collector's Edition Gold-Stamped",
+        "Paper": "Acid-free archival grade ivory paper",
+        "Publish Date": "March 2026"
+      },
+      weight: "620g",
+      dimensions: "210 x 140 x 28 mm",
+      warranty: "Archival paper guaranteed not to yellow for 50 years",
+      rating: 4.7,
+      numReviews: 31,
+      isNew: true
+    },
+    {
+      id: "prod-sports-1",
+      name: "Stryder High-Density Alignment Yoga Mat",
+      description: "Premium eco-friendly TPE yoga training mat featuring laser-engraved central alignment guide vectors, superior non-slip texture on both surfaces, and customized dual-layer thermal shock absorption system protecting sensitive joints.",
+      category: "sports",
+      brand: "Stryder",
+      sku: "STRY-YGM-ALIGN-P",
+      price: 65,
+      discountPrice: 49,
+      quantity: 80,
+      images: [
+        "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Thickness": "6mm Cushioning High-Responsive Memory Foam",
+        "Material": "Eco-Friendly Recycled Biodegradable TPE (Non-Toxic, Latex-Free)",
+        "Alignment Assist": "Laser Deep Engraved Linear vector guides",
+        "Accessories included": "Woven nylon carry strap & breathable premium mesh kit sleeve"
+      },
+      weight: "1.1kg",
+      dimensions: "1830 x 610 x 6 mm",
+      warranty: "1 Year Non-Deformation & Core Peel Warranty",
+      rating: 4.8,
+      numReviews: 128,
+      isBestseller: true
+    },
+    {
+      id: "prod-sports-2",
+      name: "Vortex Pro Carbon-Titanium Tennis Racket",
+      description: "Ultra-lightweight advanced tennis racquet constructed from aerospace Carbon-Titanium composites. Specially engineered sweet-spot matrix delivers extreme energy return and heavy swing control for tournament players.",
+      category: "sports",
+      brand: "Vortex",
+      sku: "VT-PCT-RACKET",
+      price: 199,
+      discountPrice: 175,
+      quantity: 18,
+      images: [
+        "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1617083934555-ac7d4fee123e?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Composition weight": "285g Unstrung Pro Grade System",
+        "Head Size": "100 sq. inches precision matrix layout",
+        "Balance Config": "320mm / Head Light balance distribution",
+        "Stringing template": "16 x 19 active open pattern for maximum ball spin"
+      },
+      weight: "285g",
+      dimensions: "685 x 260 x 23 mm",
+      warranty: "2 Years frame stress crack structural warranty",
+      rating: 4.7,
+      numReviews: 44,
+      isTrending: true
+    },
+    {
+      id: "prod-acc-1",
+      name: "Helix Omnicharge 140W GaN Desktop Tower",
+      description: "State-of-the-art Gallium Nitride multi-port high frequency desktop power brick. Integrates three USB-C PD3.1 ports and one smart USB-A port with digital power consumption display screen. Easily charge laptops, tablets and phones simultaneously.",
+      category: "mobile-accessories",
+      brand: "Helix",
+      sku: "HX-OC-140GAN",
+      price: 89,
+      discountPrice: 69,
+      quantity: 95,
+      images: [
+        "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Total Power Output": "140W Max Dynamic Balancing Power Tech",
+        "Gate Material": "Navitas Premium GaNFast Power Semiconductors",
+        "Interface LCD screen": "Real-time Watts & Voltage draw distribution matrix display",
+        "Protective layers": "Over-current, over-charge, and active dynamic temperature checking"
+      },
+      weight: "295g",
+      dimensions: "110 x 42 x 38 mm",
+      warranty: "18 Months Global Damage Liability & Replacement Warranty",
+      rating: 4.8,
+      numReviews: 119,
+      isNew: true,
+      isBestseller: true
+    },
+    {
+      id: "prod-acc-2",
+      name: "SnapMag Elite Magnetic Wireless Power Bank (10000mAh)",
+      description: "Ultra-thin luxury leather back wireless battery pack. Snaps perfectly on magnetic phone systems to provide rapid 15W Qi2 wireless charging, with integrated kickstand for hands-free multimedia operations.",
+      category: "mobile-accessories",
+      brand: "Helix",
+      sku: "HX-SM-EL-10K",
+      price: 59,
+      discountPrice: 45,
+      quantity: 140,
+      images: [
+        "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Capacity detail": "10000mAh Lithium Polymer high density battery core",
+        "Wireless Standard": "QI2 Magnetic Alignment technology (up to 15W transfer)",
+        "Wired output": "USB-C Power Delivery 20W input/output port",
+        "Casing material": "Anodized Aerospace Aluminium with Vegan Suede Backing"
+      },
+      weight: "165g",
+      dimensions: "102 x 65 x 11.5 mm",
+      warranty: "1 Year Battery capacity retentiveness warranty",
+      rating: 4.6,
+      numReviews: 72,
+      isTrending: true
+    },
+    {
+      id: "prod-fash-2",
+      name: "French Linen Summer Midi Dress - Pure Olive",
+      description: "Flowy, premium French linen dress featuring elegant functional shell buttons, customizable wrap-around waist tie, and hidden side seam utility pockets. Made with lightweight organic flax yarns breathable for summer heat.",
+      category: "fashion",
+      brand: "Sartorial",
+      sku: "SART-FL-MDI-OLV-M",
+      price: 150,
+      discountPrice: 119,
+      quantity: 35,
+      images: [
+        "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Composition details": "100% Certified Organic French Flax Linen",
+        "Closure profile": "Environmentally sustainable real coconut husk shell buttons",
+        "Pockets structure": "Double reinforced hidden side hip pockets",
+        "Dye technology": "Azo-Free skin-safe premium reactive olive pigment dye"
+      },
+      weight: "420g",
+      dimensions: "M (True-to-size flowy waist contouring)",
+      warranty: "Guaranteed shrink-pre-shrunk yarn wash guarantee",
+      rating: 4.7,
+      numReviews: 29,
+      isNew: true
+    },
+    {
+      id: "prod-foot-2",
+      name: "Classic Leather Dress Penny Loafers - Cognac Suede",
+      description: "Timeless business casual dress shoes constructed with hand-stitched premium cognac suede leather. Anatomically optimized supportive foam bedding inserts wrapped with raw cork for personalized orthotic comfort.",
+      category: "footwear",
+      brand: "Sartorial",
+      sku: "SART-PL-COG-09",
+      price: 180,
+      discountPrice: 135,
+      quantity: 14,
+      images: [
+        "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1603561596112-0a132b757442?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "External Leather": "Genuine Velveteen Finished Soft Italian Suede",
+        "Insole Cushioning": "Cork-mix layered with slow-rebound polymer cell pads",
+        "Sole compound": "Tread-rebound micro rubber composite preventing slip",
+        "Construction style": "Blake Stitched frame (fully resolable construction)"
+      },
+      weight: "440g",
+      dimensions: "US Men Size 9 Footbed width profile D",
+      warranty: "1 Year leather tear and sewing warranty support",
+      rating: 4.8,
+      numReviews: 61,
+      isBestseller: true
+    },
+    {
+      id: "prod-home-2",
+      name: "SilentAir H13 True HEPA Intelligent Purifier",
+      description: "Advanced active home air quality purifier fitted with high efficiency medical-grade True HEPA filter capturing 99.97% of airborne pathogens, dust, pollens and odours. Integrates automatic PM2.5 monitoring and dynamic LED loop color indices.",
+      category: "home-appliances",
+      brand: "SilentAir",
+      sku: "SA-H13-IPUR",
+      price: 220,
+      discountPrice: 179,
+      quantity: 40,
+      images: [
+        "https://images.unsplash.com/photo-1585338107529-13afc5f02586?w=600&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&auto=format&fit=crop&q=80"
+      ],
+      specifications: {
+        "Filter Standard": "Certified Medical-Grade True HEPA H13 Multi-layer setup",
+        "CADR Rating": "320 m³/h volumetric output flow",
+        "Decibels scale": "Silent Whispering night-quiet mode (19dB to 48dB)",
+        "Tech Integration": "Real-time PM2.5 air-sensor, Auto Alexa & HomeKit remote link"
+      },
+      weight: "3.8kg",
+      dimensions: "480 x 240 x 240 mm",
+      warranty: "2 Years comprehensive electronics and motor coverage",
+      rating: 4.8,
+      numReviews: 95,
+      isTrending: true
     }
   ] as Product[],
 
@@ -335,6 +634,70 @@ async function startServer() {
     });
   });
 
+  // API - Auth Google Email Check
+  app.post("/api/auth/google", (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Google account email is required." });
+    }
+    const user = dbState.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) {
+      return res.status(404).json({ message: "Email not found in database." });
+    }
+    res.json({
+      message: "Google Sign-In successful",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        role: user.role,
+        gender: user.gender,
+        dob: user.dob,
+        profilePic: user.profilePic
+      }
+    });
+  });
+
+  // API - Auth Google Instant Auto-Register
+  app.post("/api/auth/google-register", (req, res) => {
+    const { email, name } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Google email is required." });
+    }
+    const exists = dbState.users.some(u => u.email.toLowerCase() === email.toLowerCase());
+    if (exists) {
+      return res.status(409).json({ message: "Email is already registered on SmartCommerce." });
+    }
+    const userPart = email.split('@')[0];
+    const cleanName = name || (userPart.charAt(0).toUpperCase() + userPart.slice(1));
+    const newUser = {
+      id: "user-" + (dbState.users.length + 1),
+      name: cleanName,
+      email: email.toLowerCase(),
+      password: "google-auth-no-password",
+      mobile: "+91 " + Math.floor(9000000000 + Math.random() * 999999999),
+      role: "Customer" as const,
+      gender: "Other",
+      dob: "1999-01-01",
+      profilePic: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(userPart)}`
+    };
+    dbState.users.push(newUser);
+    res.status(201).json({
+      message: "Google account registered and verified!",
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        mobile: newUser.mobile,
+        role: newUser.role,
+        gender: newUser.gender,
+        dob: newUser.dob,
+        profilePic: newUser.profilePic
+      }
+    });
+  });
+
   // API - Auth Register
   app.post("/api/auth/register", (req, res) => {
     const { name, email, mobile, password, gender, dob } = req.body;
@@ -360,6 +723,55 @@ async function startServer() {
     res.status(201).json({
       message: "Account created successfully!",
       user: { id: newUser.id, name: newUser.name, email: newUser.email, role: "Customer" }
+    });
+  });
+
+  // API - Reset Password
+  app.post("/api/auth/reset-password", (req, res) => {
+    const { target, password } = req.body;
+    if (!target || !password) {
+      return res.status(400).json({ message: "Parameters target and password are required." });
+    }
+    const user = dbState.users.find(u => 
+      u.email.toLowerCase() === target.toLowerCase() || 
+      u.mobile === target
+    );
+    if (!user) {
+      return res.status(404).json({ message: "No matched registered account found." });
+    }
+    user.password = password;
+    res.json({ message: "Password updated successfully!" });
+  });
+
+  // API - Update User Profile
+  app.put("/api/auth/update-profile", (req, res) => {
+    const { userId, name, mobile, gender, dob, profilePic } = req.body;
+    if (!userId) {
+      return res.status(400).json({ message: "userId is required to update profile." });
+    }
+    const user = dbState.users.find(u => u.id === userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found to update." });
+    }
+
+    if (name) user.name = name;
+    if (mobile) user.mobile = mobile;
+    if (gender) user.gender = gender;
+    if (dob) user.dob = dob;
+    if (profilePic) user.profilePic = profilePic;
+
+    res.json({
+      message: "Profile updated successfully!",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        role: user.role,
+        gender: user.gender,
+        dob: user.dob,
+        profilePic: user.profilePic
+      }
     });
   });
 
@@ -728,6 +1140,19 @@ async function startServer() {
 
     dbState.addresses[uId].push(newAddr);
     res.status(201).json(newAddr);
+  });
+
+  app.delete("/api/addresses/:userId/:addressId", (req, res) => {
+    const { userId, addressId } = req.params;
+    if (!dbState.addresses[userId]) {
+      return res.status(404).json({ message: "No addresses found." });
+    }
+    const idx = dbState.addresses[userId].findIndex(a => a.id === addressId);
+    if (idx === -1) {
+      return res.status(404).json({ message: "Address not found." });
+    }
+    dbState.addresses[userId].splice(idx, 1);
+    res.json({ message: "Address deleted successfully", addresses: dbState.addresses[userId] });
   });
 
   // AI Chatbot with real server-side @google/genai orchestration
