@@ -2507,7 +2507,7 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
 
           {/* SCREEN: USER PROFILE SCREEN */}
           {mobileScreen === 'profile' && currentUser && (
-            <div className="space-y-4 px-4 flex-1 pb-16 overflow-y-auto max-h-[510px] no-scrollbar">
+            <div className="space-y-4 px-4 pb-16 flex-1">
               <div className="flex items-center justify-between border-b border-indigo-950 pb-2.5">
                 <div className="flex items-center gap-2">
                   <button onClick={() => setMobileScreen('home')} className="p-1 hover:bg-slate-900 rounded-lg cursor-pointer transition">
@@ -2986,8 +2986,8 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
                     <button
                       type="button"
                       onClick={() => {
-                        setGoogleEmailInput('pvsharanya21@gmail.com');
-                        handleGoogleLoginSubmit('pvsharanya21@gmail.com');
+                        setGoogleEmailInput('testuser@gmail.com');
+                        handleGoogleLoginSubmit('testuser@gmail.com');
                       }}
                       className="w-full flex items-center gap-2 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-1.5 rounded-xl text-left hover:bg-slate-250 dark:hover:bg-zinc-800 transition text-[11px] cursor-pointer"
                     >
@@ -2995,8 +2995,8 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
                         S
                       </div>
                       <div className="leading-none">
-                        <span className="font-semibold block text-[10px] text-neutral-800 dark:text-zinc-200">Sharanya Viswanathan</span>
-                        <span className="text-[8px] text-slate-400">pvsharanya21@gmail.com</span>
+                        <span className="font-semibold block text-[10px] text-neutral-800 dark:text-zinc-200">Alex Johnson</span>
+                        <span className="text-[8px] text-slate-400">testuser@gmail.com</span>
                       </div>
                     </button>
 
