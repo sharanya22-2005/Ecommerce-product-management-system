@@ -40,6 +40,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { Product, Category, CartItem, Order, Address, Coupon, Review, Notification, ChatMessage } from '../types';
+import { sampleProducts, categories as initialCategories } from '../data';
 
 interface PhoneSimulatorProps {
   currentUser: any;
@@ -54,8 +55,8 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
   const [allowNewProductsNotif, setAllowNewProductsNotif] = useState(true);
   
   // Data State synced with express backend
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [products, setProducts] = useState<Product[]>(sampleProducts);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [cartItems, setCartItems] = useState<{ productId: string; quantity: number }[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);

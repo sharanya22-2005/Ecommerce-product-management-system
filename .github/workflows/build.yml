@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,10 @@ on:
   pull_request:
     branches: [ "main", "master" ]
 
-# Set FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 to true to bypass Node.js 20 deprecation warnings on GitHub Actions
+# Set GITHUB_TOKEN permissions to allow writing branch contents for JamesIves deployment action
+permissions:
+  contents: write
+
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
@@ -29,3 +32,11 @@ jobs:
       
     - name: Verify Types and Build Application
       run: npm run build
+
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push'
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: dist             # The built directory to publish
+        branch: gh-pages         # Target branch to deploy to
+        clean: true              # Clean old assets in gh-pages before committing

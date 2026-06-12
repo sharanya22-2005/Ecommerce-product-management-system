@@ -29,6 +29,7 @@ import {
   RefreshCw 
 } from 'lucide-react';
 import { Product, Order, Coupon, Review } from '../types';
+import { sampleProducts, sampleCoupons } from '../data';
 
 interface AdminDashboardProps {
   onNotificationTriggered: (title: string, text: string) => void;
@@ -44,12 +45,26 @@ export default function AdminDashboard({ onNotificationTriggered }: AdminDashboa
     pendingOrders: 0
   });
 
-  const [salesData, setSalesData] = useState<any[]>([]);
-  const [categoryData, setCategoryData] = useState<any[]>([]);
+  const [salesData, setSalesData] = useState<any[]>([
+    { name: "Mon", sales: 180, orders: 2 },
+    { name: "Tue", sales: 320, orders: 3 },
+    { name: "Wed", sales: 140, orders: 1 },
+    { name: "Thu", sales: 450, orders: 4 },
+    { name: "Fri", sales: 290, orders: 2 },
+    { name: "Sat", sales: 620, orders: 5 },
+    { name: "Sun", sales: 380, orders: 3 }
+  ]);
+  const [categoryData, setCategoryData] = useState<any[]>([
+    { name: "Electronics", value: 75, count: 3 },
+    { name: "Fashion", value: 50, count: 2 },
+    { name: "Footwear", value: 50, count: 2 },
+    { name: "Beauty", value: 25, count: 1 },
+    { name: "Sports", value: 50, count: 2 }
+  ]);
   
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(sampleProducts);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [coupons, setCoupons] = useState<Coupon[]>(sampleCoupons);
   const [reviews, setReviews] = useState<Review[]>([]);
   
   const [loading, setLoading] = useState(true);
@@ -102,7 +117,8 @@ export default function AdminDashboard({ onNotificationTriggered }: AdminDashboa
       const rvsData = await rvsRes.json();
       setReviews(rvsData);
     } catch (e) {
-      console.error("Error loading admin datasets", e);
+      console.error("Error loading admin datasets (running on client-only static hosting):", e);
+      // Fallback is already initialized in state variables, so the app remains fully functional!
     } finally {
       setLoading(false);
     }
