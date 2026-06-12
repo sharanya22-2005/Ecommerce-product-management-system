@@ -151,11 +151,23 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
   const [reviewComment, setReviewComment] = useState('');
   const [reviewProduct, setReviewProduct] = useState<string>('');
   const [activeProdTab, setActiveProdTab] = useState<'specs' | 'reviews'>('specs');
+  const [allReviews, setAllReviews] = useState<Review[]>([]);
 
   // Swipe Gallery state
   const [detailImgIdx, setDetailImgIdx] = useState(0);
 
   // Sync state with back-end APIs
+  const fetchReviews = async () => {
+    try {
+      const res = await fetch('/api/reviews');
+      if (res.ok) {
+        setAllReviews(await res.json());
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const fetchProducts = async () => {
     try {
       const res = await fetch(`/api/products?category=${activeCategory}&search=${searchQuery}&sorting=${sortOption}`);
@@ -241,6 +253,7 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
     fetchProducts();
     fetchCategories();
     fetchNotifications();
+    fetchReviews();
 
     return () => clearTimeout(timer);
   }, []);
@@ -894,6 +907,7 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
         // Refresh product details
         const detRes = await fetch(`/api/products/${selectedProduct.id}`);
         if (detRes.ok) setSelectedProduct(await detRes.json());
+        fetchReviews();
       }
     } catch (err) {
       console.error(err);
@@ -1639,148 +1653,168 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
 
           {/* SCREEN: Product detailswipe bento bpx specs list */}
           {mobileScreen === 'details' && selectedProduct && (
-            <div className="space-y-4 px-4 pb-4">
+            <div className="space-y-4 px-4 pb-16 flex-1 overflow-y-auto max-h-[510px] no-scrollbar">
               
               {/* Image banner header navigation */}
-              <div className="flex justify-between items-center">
-                <button onClick={() => setMobileScreen('home')} className="p-1 bg-black/40 text-white rounded-full cursor-pointer"><ArrowLeft className="w-5 h-5" /></button>
-                <span className="text-xs uppercase font-bold text-slate-400">Product details</span>
-                <button onClick={() => handleToggleWishlist(selectedProduct.id)} className="p-1.5 bg-black/40 text-rose-500 rounded-full">
-                  <Heart className={`w-5 h-5 ${wishlist.includes(selectedProduct.id) ? 'fill-rose-500' : ''}`} />
+              <div className="flex justify-between items-center bg-slate-950/40 p-2 rounded-xl border border-slate-900">
+                <button onClick={() => setMobileScreen('home')} className="p-1 px-2.5 bg-slate-900 hover:bg-slate-850 text-white rounded-lg cursor-pointer text-[11px] font-bold flex items-center gap-1"><ArrowLeft className="w-3.5 h-3.5" /> Back</button>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Product details</span>
+                <button onClick={() => handleToggleWishlist(selectedProduct.id)} className="p-1 bg-slate-900 hover:bg-slate-800 text-rose-500 rounded-lg">
+                  <Heart className={`w-4 h-4 ${wishlist.includes(selectedProduct.id) ? 'fill-rose-500' : ''}`} />
                 </button>
               </div>
 
-              {/* Multiple Image Swipe Gallery indicators */}
-              <div className="relative h-48 bg-slate-900 rounded-2xl overflow-hidden shadow">
-                <img src={selectedProduct.images[detailImgIdx]} alt="" className="w-full h-full object-cover" />
-                
-                {/* Swipe selectors */}
-                {selectedProduct.images.length > 1 && (
-                  <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex gap-1.5">
-                    {selectedProduct.images.map((img, idx) => (
-                      <button 
-                        key={idx}
-                        onClick={() => setDetailImgIdx(idx)}
-                        className={`w-2 h-2 rounded-full cursor-pointer ${detailImgIdx === idx ? 'bg-blue-500 w-4' : 'bg-white/40'}`}
-                      ></button>
-                    ))}
-                  </div>
-                )}
+              {/* Main image banner preview */}
+              <div className="relative h-44 bg-slate-950 rounded-2xl overflow-hidden border border-slate-900 flex items-center justify-center">
+                <img src={selectedProduct.images[detailImgIdx]} alt="" className="max-h-full max-w-full object-contain" />
+              </div>
+
+              {/* Core Image Gallery: Make sure all the product images are present layout */}
+              <div className="space-y-1.5 text-left">
+                <span className="text-[8.5px] uppercase font-black tracking-wider text-slate-500">All Product Images ({selectedProduct.images.length})</span>
+                <div className="flex gap-2.5 overflow-x-auto pb-1 mt-1 no-scrollbar justify-start">
+                  {selectedProduct.images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setDetailImgIdx(idx)}
+                      className={`w-11 h-11 rounded-lg overflow-hidden border-2 bg-slate-950 transition-all flex mt-0.5 flex-shrink-0 ${detailImgIdx === idx ? 'border-blue-500 scale-105 shadow' : 'border-slate-800/20 hover:border-slate-800'}`}
+                    >
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Name Details */}
-              <div className="space-y-1">
+              <div className="space-y-1 text-left bg-slate-900/20 p-3 rounded-xl border border-slate-900/65">
                 <div className="flex justify-between items-start">
-                  <span className="text-[10px] bg-slate-900 text-blue-400 p-0.5 px-2 rounded font-black tracking-widest">{selectedProduct.brand}</span>
-                  <div className="flex gap-1.5 items-center">
-                    <span className="text-xs text-slate-400">Rating:</span>
-                    <span className="text-xs text-amber-500 font-bold block">★ {selectedProduct.rating}</span>
+                  <span className="text-[9px] bg-slate-900 text-blue-400 p-0.5 px-2 rounded-lg font-black tracking-widest">{selectedProduct.brand}</span>
+                  <div className="flex gap-1 items-center">
+                    <span className="text-[10px] text-amber-500 font-bold block">★ {selectedProduct.rating}</span>
+                    <span className="text-[9px] text-slate-500">({selectedProduct.numReviews || 0} Reviews)</span>
                   </div>
                 </div>
-                <h3 className="text-base font-bold text-slate-100">{selectedProduct.name}</h3>
+                <h3 className="text-[13px] font-bold text-slate-100">{selectedProduct.name}</h3>
                 
                 <div className="flex items-baseline gap-2 pt-1">
-                  <span className="text-lg font-black text-slate-100">${selectedProduct.discountPrice || selectedProduct.price}</span>
+                  <span className="text-[15px] font-black text-slate-100">${selectedProduct.discountPrice || selectedProduct.price}</span>
                   {selectedProduct.discountPrice && (
-                    <span className="text-xs text-slate-500 line-through">${selectedProduct.price}</span>
+                    <span className="text-[11px] text-slate-500 line-through">${selectedProduct.price}</span>
                   )}
                 </div>
               </div>
 
-              {/* Tab selector specs or reviews */}
-              <div className="flex gap-2 border-b border-slate-900">
-                <button 
-                  onClick={() => setActiveProdTab('specs')}
-                  className={`pb-2 text-xs font-bold transition flex-1 text-center cursor-pointer ${activeProdTab === 'specs' ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400'}`}
-                >
-                  Specifications
-                </button>
-                <button 
-                  onClick={() => setActiveProdTab('reviews')}
-                  className={`pb-2 text-xs font-bold transition flex-1 text-center cursor-pointer ${activeProdTab === 'reviews' ? 'border-b-2 border-blue-500 text-blue-400' : 'text-slate-400'}`}
-                >
-                  Reviews ({selectedProduct.numReviews || 0})
-                </button>
+              {/* SPEC SHEET DETAILS */}
+              <div className="space-y-2 text-left">
+                <div className="p-3 bg-slate-900/40 rounded-xl border border-slate-900 text-xs space-y-2">
+                  <span className="text-[9px] font-bold text-blue-400 block uppercase tracking-wider">Product Features & Specifications</span>
+                  <p className="text-[11px] text-slate-400 leading-normal">{selectedProduct.description}</p>
+                  
+                  <div className="space-y-1 divide-y divide-slate-800/40 text-[11px] pt-1.5">
+                    {Object.entries(selectedProduct.specifications).map(([key, value]) => (
+                      <div key={key} className="flex justify-between py-1 text-slate-300">
+                        <span className="text-slate-400 font-medium">{key}</span>
+                        <span className="font-bold text-slate-200 text-right max-w-[130px] truncate">{value}</span>
+                      </div>
+                    ))}
+                    <div className="flex justify-between py-1 text-slate-300">
+                      <span className="text-slate-400 font-medium">Warranty</span>
+                      <span className="font-bold text-slate-200 text-right truncate max-w-[130px]">{selectedProduct.warranty}</span>
+                    </div>
+                    <div className="flex justify-between py-1 text-slate-300">
+                      <span className="text-slate-400 font-medium">Weight</span>
+                      <span className="font-bold text-slate-200 text-right">{selectedProduct.weight}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {activeProdTab === 'specs' ? (
-                <div className="space-y-3">
-                  <p className="text-xs text-slate-400 leading-relaxed">{selectedProduct.description}</p>
-                  
-                  {/* Specifications table */}
-                  <div className="p-3 bg-slate-900/60 rounded-xl border border-slate-900 text-xs">
-                    <h5 className="font-bold text-slate-300 mb-2 uppercase text-[10px] tracking-wider text-blue-400">Specifications Bento</h5>
-                    <div className="space-y-1.5 divide-y divide-slate-800/40 text-[11px]">
-                      {Object.entries(selectedProduct.specifications).map(([key, value]) => (
-                        <div key={key} className="flex justify-between py-1 text-slate-300">
-                          <span className="text-slate-400 font-medium">{key}</span>
-                          <span className="font-bold text-slate-100 text-right max-w-[150px] truncate">{value}</span>
-                        </div>
-                      ))}
-                      <div className="flex justify-between py-1 text-slate-300">
-                        <span className="text-slate-400 font-medium">Warranty</span>
-                        <span className="font-bold text-white text-right truncate max-w-[150px]">{selectedProduct.warranty}</span>
-                      </div>
-                      <div className="flex justify-between py-1 text-slate-300">
-                        <span className="text-slate-400 font-medium">Weight</span>
-                        <span className="font-bold text-white text-right">{selectedProduct.weight}</span>
-                      </div>
-                    </div>
-                  </div>
+              {/* SECTION FOR COMMENTS, REVIEW AND RATING (ALWAYS BELOW THE PRODUCT) */}
+              <div className="border-t border-slate-900/80 pt-4 space-y-4 text-left">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block font-black">Feedbacks & Star Ratings</span>
+                  <span className="h-px bg-slate-950 flex-1"></span>
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Write a review forms */}
-                  <form onSubmit={handlePostReview} className="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-2">
-                    <span className="text-[10px] font-bold text-blue-400 block uppercase mb-1">Write a Review</span>
-                    <div className="flex items-center gap-1 mb-1">
-                      {[1, 2, 3, 4, 5].map(val => (
-                        <button 
-                          key={val} 
-                          type="button"
-                          onClick={() => setReviewRating(val)}
-                          className="p-0.5"
-                        >
-                          <Star className={`w-4 h-4 cursor-pointer ${reviewRating >= val ? 'fill-amber-500 text-amber-500' : 'text-slate-600'}`} />
-                        </button>
-                      ))}
-                    </div>
-                    <textarea 
-                      placeholder="Comment review..." 
-                      value={reviewComment}
-                      onChange={(e) => setReviewComment(e.target.value)}
-                      required
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs outline-none text-slate-200"
-                    />
-                    <button 
-                      type="submit"
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-1.5 px-3.5 text-[11px] font-semibold cursor-pointer"
-                    >
-                      Submit Review
-                    </button>
-                  </form>
 
-                  {/* Seeded or other buyer reviews */}
-                  <div className="space-y-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Buyer reviews</span>
-                    <div className="p-2.5 bg-slate-900/30 border border-slate-900 rounded-lg text-xs space-y-1">
-                      <div className="flex justify-between font-semibold">
-                        <span>Anjali Sen (Verified Buyer)</span>
-                        <span className="text-amber-500">★ 5.0</span>
-                      </div>
-                      <p className="text-slate-400 italic">"This fits the specs list perfectly. Fast charge is very impressive, AMOLED screen colors pop beautifully!"</p>
-                    </div>
+                {/* Write a review form */}
+                <form onSubmit={handlePostReview} className="p-3 bg-slate-900/60 border border-slate-900/80 rounded-xl space-y-2">
+                  <span className="text-[10px] font-bold text-slate-300 block uppercase mb-1">Add your Review Rating</span>
+                  
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map(val => (
+                      <button 
+                        key={val} 
+                        type="button"
+                        onClick={() => setReviewRating(val)}
+                        className="p-1 cursor-pointer hover:scale-110 transition-transform"
+                      >
+                        <Star className={`w-4 h-4 ${reviewRating >= val ? 'fill-amber-500 text-amber-500' : 'text-slate-600'}`} />
+                      </button>
+                    ))}
+                    <span className="text-[10px] text-slate-400 ml-1 font-bold">({reviewRating}/5 Stars)</span>
                   </div>
+
+                  <textarea 
+                    placeholder="Type your comment, opinion or feedback here..." 
+                    value={reviewComment}
+                    onChange={(e) => setReviewComment(e.target.value)}
+                    required
+                    rows={2}
+                    className="w-full bg-slate-950 border border-slate-850 rounded-lg p-2 text-[11px] outline-none text-slate-200 placeholder-slate-650 focus:border-indigo-800"
+                  />
+                  
+                  <button 
+                    type="submit"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg p-1.5 text-[11px] font-semibold cursor-pointer transition-colors"
+                  >
+                    Post Customer Review
+                  </button>
+                </form>
+
+                {/* Seeded or other buyer reviews */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider block font-bold">Buyer Reviews Feed</span>
+                    <span className="text-[9px] font-mono text-slate-550">({allReviews.filter(r => r.productId === selectedProduct.id && !r.isSpam).length + 1} Comments)</span>
+                  </div>
+
+                  {/* Seeded Static Review for realism, always shown */}
+                  <div className="p-2.5 bg-slate-900/30 border border-slate-900 rounded-lg text-xs space-y-1">
+                    <div className="flex justify-between font-semibold items-center">
+                      <span className="text-slate-300">Anjali Sen (Verified Buyer)</span>
+                      <span className="text-amber-500 text-[10px]">★★★★★</span>
+                    </div>
+                    <p className="text-slate-400 italic text-[11px]">"Highly recommended! This fits the spec sheet list perfectly. Design is clean and delivery was blazing fast."</p>
+                  </div>
+
+                  {/* Dynamic Reviews list */}
+                  {allReviews
+                    .filter(r => r.productId === selectedProduct.id && !r.isSpam)
+                    .map((notifReview) => (
+                      <div key={notifReview.id} className="p-2.5 bg-slate-900/30 border border-slate-900 rounded-lg text-xs space-y-1">
+                        <div className="flex justify-between font-semibold items-center">
+                          <span className="text-slate-300">{notifReview.userName}</span>
+                          <span className="text-amber-500 text-[10px]">
+                            {"★".repeat(notifReview.rating)}
+                            {"☆".repeat(5 - notifReview.rating)}
+                          </span>
+                        </div>
+                        <p className="text-slate-400 italic text-[11px]">"{notifReview.comment}"</p>
+                        {notifReview.date && (
+                          <span className="text-[8px] text-slate-500 block font-mono text-right">{notifReview.date}</span>
+                        )}
+                      </div>
+                    ))}
                 </div>
-              )}
+              </div>
 
               {/* Action Button: Add to Cart */}
               <div className="pt-2">
                 <button 
                   onClick={() => handleAddToCart(selectedProduct.id, 1)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition shadow-lg"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-xl font-bold text-[11.5px] flex items-center justify-center gap-2 cursor-pointer transition shadow-lg shrink-0"
                 >
-                  <ShoppingCart className="w-4 h-4" /> Add to Shopping Cart
+                  <ShoppingCart className="w-3.5 h-3.5" /> Add to Shopping Cart
                 </button>
               </div>
 
