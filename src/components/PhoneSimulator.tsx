@@ -33,7 +33,11 @@ import {
   Loader2,
   Mail,
   Calendar,
-  MapPin
+  MapPin,
+  Bell,
+  BellOff,
+  Tag,
+  AlertTriangle
 } from 'lucide-react';
 import { Product, Category, CartItem, Order, Address, Coupon, Review, Notification, ChatMessage } from '../types';
 
@@ -45,8 +49,9 @@ interface PhoneSimulatorProps {
 
 export default function PhoneSimulator({ currentUser, setCurrentUser, onNotificationTriggered }: PhoneSimulatorProps) {
   // Mobile UI state
-  const [mobileScreen, setMobileScreen] = useState<'splash' | 'login' | 'register' | 'forgot' | 'home' | 'categories' | 'details' | 'cart' | 'checkout' | 'orders' | 'profile' | 'chatbot'>('splash');
+  const [mobileScreen, setMobileScreen] = useState<'splash' | 'login' | 'register' | 'forgot' | 'home' | 'categories' | 'details' | 'cart' | 'checkout' | 'orders' | 'profile' | 'chatbot' | 'notifications'>('splash');
   const [phoneTheme, setPhoneTheme] = useState<'light' | 'dark'>('dark');
+  const [allowNewProductsNotif, setAllowNewProductsNotif] = useState(true);
   
   // Data State synced with express backend
   const [products, setProducts] = useState<Product[]>([]);
@@ -1414,10 +1419,21 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setMobileScreen('chatbot')}
+                    title="Chatbot AI"
                     className="p-1.5 bg-blue-500/10 hover:bg-blue-500/20 rounded-full text-blue-400 border border-blue-500/10 cursor-pointer relative"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span className="absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full"></span>
+                  </button>
+                  <button 
+                    onClick={() => { setMobileScreen('notifications'); fetchNotifications(); }}
+                    title="Notifications"
+                    className="p-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full text-indigo-400 border border-indigo-500/10 cursor-pointer relative"
+                  >
+                    <Bell className="w-4 h-4" />
+                    {notifications.some(n => !n.isRead) && (
+                      <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-bounce"></span>
+                    )}
                   </button>
                   <button 
                     onClick={() => {
@@ -2889,10 +2905,133 @@ export default function PhoneSimulator({ currentUser, setCurrentUser, onNotifica
             </div>
           )}
 
+          {/* SCREEN: NOTIFICATIONS SYSTEM INDEX SCREEN */}
+          {mobileScreen === 'notifications' && (
+            <div className="flex-1 flex flex-col justify-between h-full pb-16">
+              <div className="px-4 py-3 border-b border-indigo-950 bg-slate-950/60 flex items-center justify-between">
+                <div className="flex items-center gap-2.5 text-left">
+                  <button onClick={() => setMobileScreen('home')} className="p-1 hover:bg-slate-900 rounded-lg cursor-pointer transition">
+                    <ArrowLeft className="w-4 h-4 text-slate-400" />
+                  </button>
+                  <div className="leading-tight">
+                    <h3 className="font-bold text-xs text-slate-200">Alerts & Notifications</h3>
+                    <span className="text-[8px] uppercase tracking-wider text-slate-400 block font-bold">System Announcements</span>
+                  </div>
+                </div>
+                {notifications.some(n => !n.isRead) && (
+                  <button 
+                    onClick={async () => {
+                      try {
+                        const res = await fetch('/api/notifications/read-all', { method: 'POST' });
+                        if (res.ok) {
+                          onNotificationTriggered("Inbox Read", "All pending notifications flagged as read.");
+                          fetchNotifications();
+                        }
+                      } catch (err) {
+                        console.error(err);
+                      }
+                    }}
+                    className="text-[10px] text-indigo-400 hover:underline font-bold cursor-pointer"
+                  >
+                    Mark read
+                  </button>
+                )}
+              </div>
+
+              {/* Notification Preferences Toggle Panel */}
+              <div className="p-3 mx-4 mt-3 bg-indigo-950/20 rounded-xl border border-indigo-950/40 text-left">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <span className="font-bold text-[10px] text-indigo-200 block uppercase">Product Add Alerts</span>
+                    <span className="text-[9px] text-slate-400 font-medium">Receive alerts when new products get added</span>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const newPref = !allowNewProductsNotif;
+                      setAllowNewProductsNotif(newPref);
+                      onNotificationTriggered(
+                        newPref ? "Alert Preferences Enabled" : "Alert Preferences Disabled",
+                        newPref ? "You will be notified of new products!" : "Muted notifications for catalog inclusions."
+                      );
+                    }}
+                    className={`w-9 h-5 rounded-full p-0.5 transition-colors cursor-pointer duration-205 flex items-center ${allowNewProductsNotif ? 'bg-indigo-600 justify-end' : 'bg-slate-800 justify-start'}`}
+                  >
+                    <span className="w-4 h-4 bg-white rounded-full shadow"></span>
+                  </button>
+                </div>
+              </div>
+
+              {/* List scroll wrapper */}
+              <div className="flex-1 p-4 overflow-y-auto space-y-2 max-h-[460px] no-scrollbar">
+                {(() => {
+                  let list = [...notifications];
+                  if (!allowNewProductsNotif) {
+                    // Filter out notifications that mention product arrival
+                    list = list.filter(n => !(n.type === 'inventory' && (n.title.toLowerCase().includes("new product") || n.text.toLowerCase().includes("added to our"))));
+                  }
+
+                  if (list.length === 0) {
+                    return (
+                      <div className="text-center py-12 text-slate-500 space-y-3">
+                        <Bell className="w-8 h-8 mx-auto text-slate-600 animate-pulse" />
+                        <p className="text-xs">No notifications are active right now.</p>
+                      </div>
+                    );
+                  }
+
+                  return list.map((notif) => {
+                    // Decide icon and text colors based on notification type
+                    let notifIcon = <Bell className="w-3.5 h-3.5" />;
+                    let iconBg = 'bg-slate-900 border-slate-800 text-slate-400';
+                    if (notif.type === 'order') {
+                      notifIcon = <ShoppingBag className="w-3.5 h-3.5" />;
+                      iconBg = 'bg-blue-500/10 border-blue-500/20 text-blue-400';
+                    } else if (notif.type === 'offer') {
+                      notifIcon = <Tag className="w-3.5 h-3.5" />;
+                      iconBg = 'bg-amber-500/10 border-amber-500/20 text-amber-400';
+                    } else if (notif.type === 'inventory') {
+                      notifIcon = <AlertTriangle className="w-3.5 h-3.5" />;
+                      iconBg = 'bg-rose-500/10 border-rose-500/20 text-rose-400';
+                    }
+
+                    return (
+                      <div 
+                        key={notif.id}
+                        className={`p-3 rounded-xl border text-left flex gap-3 transition-all ${
+                          !notif.isRead 
+                            ? 'bg-slate-900/80 border-indigo-950/40 relative overflow-hidden' 
+                            : 'bg-slate-950 border-slate-900/60 opacity-80'
+                        }`}
+                      >
+                        {!notif.isRead && (
+                          <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-blue-500 rounded-bl-full"></div>
+                        )}
+                        <div className={`p-2 h-8 w-8 rounded-lg flex items-center justify-center border flex-shrink-0 ${iconBg}`}>
+                          {notifIcon}
+                        </div>
+                        <div className="space-y-1 flex-1">
+                          <div className="flex justify-between items-start gap-1">
+                            <h4 className={`font-bold text-[10.5px] leading-snug ${!notif.isRead ? 'text-slate-100' : 'text-slate-400'}`}>
+                              {notif.title}
+                            </h4>
+                            <span className="text-[7.5px] text-slate-500 font-mono flex-shrink-0">
+                              {new Date(notif.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <p className="text-[9.5px] text-slate-400 leading-normal">{notif.text}</p>
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </div>
+            </div>
+          )}
+
         </div>
 
         {/* BOTTOM NAVIGATION DRAWER BAR (Persistent highlight indicators) */}
-        {['home', 'categories', 'cart', 'orders', 'details', 'chatbot', 'profile'].includes(mobileScreen) && (
+        {['home', 'categories', 'cart', 'orders', 'details', 'chatbot', 'profile', 'notifications'].includes(mobileScreen) && (
           <div className="absolute bottom-0 inset-x-0 h-12 bg-slate-950 border-t border-slate-900 flex justify-around items-center text-slate-500">
             <button 
               onClick={() => setMobileScreen('home')}

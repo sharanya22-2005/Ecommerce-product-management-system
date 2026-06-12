@@ -840,6 +840,18 @@ async function startServer() {
       isNew: true
     };
     dbState.products.push(newProduct);
+
+    // Create automatically triggered notification for new product arrivals
+    const newNotif: Notification = {
+      id: "notif-prod-" + Date.now().toString(),
+      title: "New Product Arrival! 🚀",
+      text: `Hot entry in ${newProduct.category}: check out "${newProduct.name}" by ${newProduct.brand} now available for sale for just $${newProduct.price}!`,
+      date: new Date().toISOString(),
+      isRead: false,
+      type: "inventory"
+    };
+    dbState.notifications.unshift(newNotif);
+
     res.status(201).json({ message: "Product added to catalog", product: newProduct });
   });
 
