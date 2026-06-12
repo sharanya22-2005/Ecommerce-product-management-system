@@ -1,49 +1,31 @@
-name: Deploy Vite App to GitHub Pages
+name: Build and Test
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Set FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 to true to bypass Node.js 20 deprecation warnings on GitHub Actions
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-
-      - run: npm run build
-
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'npm'
+        
+    - name: Install and Cache Dependencies
+      run: npm ci
+      
+    - name: Verify Types and Build Application
+      run: npm run build
